@@ -7,6 +7,7 @@ use System\Exceptions\Exc404;
 use System\Router;
 use System\ModulesDispatcher;
 use Modules\CompletedDeals\Module as CompletedDeals;
+use Modules\Booking\Module as Booking;
 
 const BASE_URL = '/introvert_tasks/';
 const DB_HOST = 'localhost';
@@ -14,6 +15,8 @@ const DB_HOST = 'localhost';
 try{	
 	$modules = new ModulesDispatcher();
 	$modules->add(new CompletedDeals());
+	$modules->add(new Booking());
+
 	$router = new Router(BASE_URL);
 	
 	$modules->registerRoutes($router);
@@ -29,7 +32,7 @@ try{
 	echo $html;
 }
 catch(Exc404 $e){
-	echo '404 here'; 
+	echo '404 here' . $e->getMessage() . $e->getFile() . $e->getLine();
 }
 catch(Throwable $e){
 	echo 'nice show error - ' . $e->getMessage() . $e->getFile() . $e->getLine();
